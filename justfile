@@ -16,6 +16,9 @@ alias nl := native-linux
 default:
     @just --list
 
+# Execute all tasks leading to release
+all: test docker-build docker-scout native-linux
+
 # Complete docker image build and security validation
 docker: docker-build docker-scout
 
@@ -46,6 +49,10 @@ clean:
     ./gradlew clean
     -rm -rf {{NATIVE_DIR}}
     -rm -rf ./bin
+
+# Execute unit tests
+test:
+    ./gradlew test
 
 # Native compile via container (Linux only)
 native-linux: docker-build

@@ -29,7 +29,7 @@ public class Command implements Callable<Integer> {
 
     @Override public Integer call() {
         if (javaVersion) {
-            Cli.printInfo(String.format("Java version %s", System.getProperty("java.version")));
+            Cli.printSuccess(String.format("Java version %s", System.getProperty("java.version")));
             return 0;
         }
 
