@@ -1,0 +1,6 @@
+bin/
+.idea/
+build/
+.vscode/
+native/
+.gradle/

@@ -1,0 +1,42 @@
+plugins {
+    id 'application'
+    id 'groovy'
+    id 'org.graalvm.buildtools.native' version '0.9.28'
+}
+
+application {
+    mainClass = 'com.burgaud.xmlval.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.7.5'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.5'
+    testImplementation 'org.apache.groovy:groovy:4.0.18'
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-4.0'
+}
+
+tasks.named('jar') {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Class-Path': configurations.runtimeClasspath.files.collect { it.name }.join(' '),
+                   'Implementation-Version': project.version,
+                   'Main-Class': application.mainClass)
+    }
+}
+
+graalvmNative {
+    binaries {
+        main {
+            buildArgs.add('--no-fallback')
+            buildArgs.add('-o jxmlval')
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
