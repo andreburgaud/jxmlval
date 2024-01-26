@@ -1,7 +1,7 @@
 #!/usr/bin/env just --justfile
 
 APP := "jxmlval"
-VERSION := "0.1.0"
+VERSION := "0.2.0"
 NATIVE_DIR := "native"
 
 alias d := docker

@@ -4,11 +4,12 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Model.CommandSpec;
 import static picocli.CommandLine.*;
 
 @CommandLine.Command(name = "jxmlval",
         mixinStandardHelpOptions = true,
-        version = "@|green,bold jxmlval version 0.1.0|@",
+        version = "@|green,bold jxmlval version 0.2.0|@",
         header = {
                 "@|green,bold      ___  ____  __ _ __     __    _      |@",
                 "@|green,bold     | \\ \\/ /  \\/  | |\\ \\   / /_ _| |     |@",
@@ -26,6 +27,9 @@ public class Command implements Callable<Integer> {
 
     @Option(names = {"--java-version"}, description = "Show Java Version.")
     private boolean javaVersion;
+
+    @Spec
+    CommandSpec spec;
 
     @Override public Integer call() {
         if (javaVersion) {
@@ -56,6 +60,8 @@ public class Command implements Callable<Integer> {
                 }
             }
         }
+
+        spec.commandLine().usage(System.err);
 
         return 0;
     }
