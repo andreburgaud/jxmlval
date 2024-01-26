@@ -1,11 +1,13 @@
 #!/usr/bin/env just --justfile
 
 APP := "jxmlval"
+DOCKER_IMAGE := "andreburgaud" / APP
 VERSION := "0.2.0"
 NATIVE_DIR := "native"
 
 alias d := docker
 alias db := docker-build
+alias dp := docker-push
 alias ds := docker-scout
 alias ghp := github-push
 alias gj := gradle-jar
@@ -30,6 +32,12 @@ docker-build: clean
 # Docker scout (container image security scan)
 docker-scout:
     docker scout cves andreburgaud/{{APP}}:{{VERSION}}
+
+# Push showcert docker image to docker hub
+docker-push: docker
+    docker push docker.io/{{DOCKER_IMAGE}}:{{VERSION}}
+    docker tag {{DOCKER_IMAGE}}:{{VERSION}} docker.io/{{DOCKER_IMAGE}}:latest
+    docker push docker.io/{{DOCKER_IMAGE}}:latest
 
 # Run from an install distribution
 run *ARGS:
